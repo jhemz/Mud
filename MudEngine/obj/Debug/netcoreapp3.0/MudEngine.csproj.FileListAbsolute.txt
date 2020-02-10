@@ -1,0 +1,8 @@
+C:\Users\j.marshall\source\repos\CP\MudEngine\bin\Debug\netcoreapp3.0\MudEngine.deps.json
+C:\Users\j.marshall\source\repos\CP\MudEngine\bin\Debug\netcoreapp3.0\MudEngine.dll
+C:\Users\j.marshall\source\repos\CP\MudEngine\bin\Debug\netcoreapp3.0\MudEngine.pdb
+C:\Users\j.marshall\source\repos\CP\MudEngine\obj\Debug\netcoreapp3.0\MudEngine.csprojAssemblyReference.cache
+C:\Users\j.marshall\source\repos\CP\MudEngine\obj\Debug\netcoreapp3.0\MudEngine.AssemblyInfoInputs.cache
+C:\Users\j.marshall\source\repos\CP\MudEngine\obj\Debug\netcoreapp3.0\MudEngine.AssemblyInfo.cs
+C:\Users\j.marshall\source\repos\CP\MudEngine\obj\Debug\netcoreapp3.0\MudEngine.dll
+C:\Users\j.marshall\source\repos\CP\MudEngine\obj\Debug\netcoreapp3.0\MudEngine.pdb

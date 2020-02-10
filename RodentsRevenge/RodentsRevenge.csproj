@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Block.xaml.cs" />
+    <Compile Remove="SpriteBase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\block.png" />
+    <None Remove="Images\borderBlock.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Block.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MudEngine\MudEngine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\block.png" />
+    <Resource Include="Images\borderBlock.png" />
+  </ItemGroup>
+
+</Project>
