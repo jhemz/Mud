@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using MudEngine;
 
 namespace RodentsRevenge
@@ -25,6 +26,8 @@ namespace RodentsRevenge
 
         SpriteItem mouse;
         List<SpriteItem> Blocks = new List<SpriteItem>();
+        List<SpriteItem> Baddies = new List<SpriteItem>();
+        DispatcherTimer dispatcherTimer;
 
         public MainWindow()
         {
@@ -60,6 +63,10 @@ namespace RodentsRevenge
                 main.Children.Add(bSpriteItem2);
             }
 
+           
+
+           
+
             for (int x = 5; x < 18; x++)
             {
                 for (int y = 5; y < 18; y++)
@@ -89,11 +96,51 @@ namespace RodentsRevenge
                     }
                 }
             }
+            SpriteItem baddie = new SpriteItem(2, 2, @"./Images/borderblock.png", true, true, mouse.sprite);
+            Grid.SetRow(baddie, baddie.sprite.Y);
+            Grid.SetColumn(baddie, baddie.sprite.X);
+            main.Children.Add(baddie);
+            Baddies.Add(baddie);
+
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
 
             engine.Sprites = Blocks.Select(x => x.sprite).ToList();
 
         }
 
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            foreach (SpriteItem baddie in Baddies)
+            {
+                Direction directionToMoveBaddie = baddie.sprite.Ai.Move(baddie.sprite.X, baddie.sprite.Y);
+                switch (directionToMoveBaddie)
+                {
+                    case Direction.left:
+                        int x = baddie.sprite.X - 1;
+                        Grid.SetColumn(baddie, x);
+                        baddie.sprite.X = x;
+                        break;
+                    case Direction.right:
+                        x = baddie.sprite.X + 1;
+                        Grid.SetColumn(baddie, x);
+                        baddie.sprite.X = x;
+                        break;
+                    case Direction.up:
+                        int y = baddie.sprite.Y - 1;
+                        Grid.SetRow(baddie, y);
+                        baddie.sprite.Y = y;
+                        break;
+                    case Direction.down:
+                        y = baddie.sprite.Y + 1;
+                        Grid.SetRow(baddie, y);
+                        baddie.sprite.Y = y;
+                        break;
+                }
+            }
+        }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {

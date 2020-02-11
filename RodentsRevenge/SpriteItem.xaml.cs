@@ -28,6 +28,8 @@ namespace RodentsRevenge
             }
         }
 
+
+
         public SpriteItem(int x, int y, string uri, bool canMove = true)
         {
             InitializeComponent();
@@ -37,5 +39,22 @@ namespace RodentsRevenge
             image.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
 
         }
-    }
+
+        public SpriteItem(int x, int y, string uri, bool aiControlled, bool canMove = true, Sprite target = null)
+        {
+            InitializeComponent();
+            sprite = new Sprite() { X = x, Y = y };
+            sprite.CanMove = canMove;
+
+            image.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
+
+            if (aiControlled)
+            {
+                sprite.Ai = new AI() { Target = target, Sprite = sprite };
+            }
+
+        }
+
+       
+}
 }

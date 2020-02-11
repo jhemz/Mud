@@ -104,6 +104,7 @@ namespace MudEngine
             }
             return result;
         }
+
         public List<Sprite> GetAllSpritesInPath(int x, int y, Direction direction)
         {
             List<Sprite> result = new List<Sprite>();
@@ -189,8 +190,6 @@ namespace MudEngine
 
             return result2;
         }
-
-       
     }
 
     public enum Direction
