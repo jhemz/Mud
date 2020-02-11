@@ -22,7 +22,7 @@ namespace RodentsRevenge
     /// </summary>
     public partial class MainWindow : Window
     {
-        IsometricTileEngine engine = new IsometricTileEngine();
+        IsometricTileEngine engine;
 
         SpriteItem mouse;
         List<SpriteItem> Blocks = new List<SpriteItem>();
@@ -33,74 +33,83 @@ namespace RodentsRevenge
         {
             InitializeComponent();
 
-            engine.GridWidth = 23;
-            engine.GridHeight = 23;
+            const int width = 23;
+            const int height = 23;
 
-            for (int y = 0; y < engine.GridHeight; y++)
+            mouse = new SpriteItem(0, 0, @"./Images/borderblock.png");
+
+            Layer layer = new Layer();
+            layer.Array = new int[width, height]
             {
-                SpriteItem bSpriteItem = new SpriteItem(0, y, false);
-                Blocks.Add(bSpriteItem);
-                Grid.SetRow(bSpriteItem, y);
-                Grid.SetColumn(bSpriteItem, 0);
-                main.Children.Add(bSpriteItem);
-                SpriteItem bSpriteItem2 = new SpriteItem(engine.GridHeight - 1, y, false);
-                Blocks.Add(bSpriteItem2);
-                Grid.SetRow(bSpriteItem2, y);
-                Grid.SetColumn(bSpriteItem2, 22);
-                main.Children.Add(bSpriteItem2);
-            }
-            for (int x = 1; x < engine.GridWidth - 1; x++)
+                { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,3,1,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+                { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
+            };
+            Level level = new Level(new IsometricTileEngine(23, 23));
+            level.Map = new Map();
+            level.Map.Layers.Add(layer);
+            engine = level.Engine;
+
+            for (int y = 0; y < width; y++)
             {
-                SpriteItem bSpriteItem = new SpriteItem(x, 0, false);
-                Blocks.Add(bSpriteItem);
-                Grid.SetRow(bSpriteItem, 0);
-                Grid.SetColumn(bSpriteItem, x);
-                main.Children.Add(bSpriteItem);
-                SpriteItem bSpriteItem2 = new SpriteItem(x, engine.GridWidth - 1, false);
-                Blocks.Add(bSpriteItem2);
-                Grid.SetRow(bSpriteItem2, 22);
-                Grid.SetColumn(bSpriteItem2, x);
-                main.Children.Add(bSpriteItem2);
-            }
-
-           
-
-           
-
-            for (int x = 5; x < 18; x++)
-            {
-                for (int y = 5; y < 18; y++)
+                for (int x = 0; x < height; x++)
                 {
-                    if (x == 11 && y == 11)
+                    int value = layer.Array[y, x];
+                    switch (value)
                     {
-                        mouse = new SpriteItem(x, y, @"./Images/borderblock.png");
-                        Grid.SetRow(mouse, y);
-                        Grid.SetColumn(mouse, x);
-                        main.Children.Add(mouse);
-                    }
-                    else if (x == 12 && y == 11)
-                    {
-                        SpriteItem SpriteItemNoMove = new SpriteItem(x, y, false);
-                        Blocks.Add(SpriteItemNoMove);
-                        Grid.SetRow(SpriteItemNoMove, y);
-                        Grid.SetColumn(SpriteItemNoMove, x);
-                        main.Children.Add(SpriteItemNoMove);
-                    }
-                    else
-                    {
-                        SpriteItem SpriteItem = new SpriteItem(x, y, true);
-                        Blocks.Add(SpriteItem);
-                        Grid.SetRow(SpriteItem, y);
-                        Grid.SetColumn(SpriteItem, x);
-                        main.Children.Add(SpriteItem);
+                        case 1:
+                            SpriteItem solidBlock = new SpriteItem(x, y, false);
+                            Blocks.Add(solidBlock);
+                            Grid.SetRow(solidBlock, y);
+                            Grid.SetColumn(solidBlock, x);
+                            main.Children.Add(solidBlock);
+                            break;
+                        case 2:
+                            SpriteItem pushBlock = new SpriteItem(x, y, true);
+                            Blocks.Add(pushBlock);
+                            Grid.SetRow(pushBlock, y);
+                            Grid.SetColumn(pushBlock, x);
+                            main.Children.Add(pushBlock);
+                            break;
+                        case 3:
+                            mouse.sprite.X = x;
+                            mouse.sprite.Y = y;
+                            Grid.SetRow(mouse, y);
+                            Grid.SetColumn(mouse, x);
+                            main.Children.Add(mouse);
+                            break;
+                        case 4:
+                            SpriteItem cat = new SpriteItem(2, 2, @"./Images/borderblock.png", true, true, mouse.sprite);
+                            cat.sprite.Ai.engine = engine;
+                            Grid.SetRow(cat, cat.sprite.Y);
+                            Grid.SetColumn(cat, cat.sprite.X);
+                            main.Children.Add(cat);
+                            Baddies.Add(cat);
+                            break;
+
                     }
                 }
             }
-            SpriteItem baddie = new SpriteItem(2, 2, @"./Images/borderblock.png", true, true, mouse.sprite);
-            Grid.SetRow(baddie, baddie.sprite.Y);
-            Grid.SetColumn(baddie, baddie.sprite.X);
-            main.Children.Add(baddie);
-            Baddies.Add(baddie);
 
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);

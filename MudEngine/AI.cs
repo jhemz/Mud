@@ -6,14 +6,14 @@ namespace MudEngine
 {
     public class AI
     {
-        IsometricTileEngine engine;
+        public IsometricTileEngine engine;
 
         public Sprite Sprite { get; set; }
         public Sprite Target { get; set; }
 
         public AI()
         {
-            engine = new IsometricTileEngine();
+          
         }
 
         public Direction Move(int x, int y)

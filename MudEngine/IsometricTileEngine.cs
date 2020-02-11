@@ -6,10 +6,21 @@ namespace MudEngine
 {
     public class IsometricTileEngine
     {
+
         public Sprite characterSprite;
         public List<Sprite> Sprites = new List<Sprite>();
-        public int GridWidth = 10;
-        public int GridHeight = 10;
+        public int GridWidth;
+        public int GridHeight;
+        public Map map;
+
+        public IsometricTileEngine(int width, int height)
+        {
+            GridWidth = width;
+            GridHeight = height;
+            map = new Map();
+            map.Layers.Add(new Layer());
+        }
+
 
       
 
