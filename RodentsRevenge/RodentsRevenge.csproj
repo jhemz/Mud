@@ -15,6 +15,7 @@
     <None Remove="Images\block.png" />
     <None Remove="Images\borderBlock.png" />
     <None Remove="Images\cat.png" />
+    <None Remove="Images\mouse.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,7 @@
     <Resource Include="Images\block.png" />
     <Resource Include="Images\borderBlock.png" />
     <Resource Include="Images\cat.png" />
+    <Resource Include="Images\mouse.png" />
   </ItemGroup>
 
 </Project>

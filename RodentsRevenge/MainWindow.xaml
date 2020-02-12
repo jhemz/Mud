@@ -3,59 +3,83 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RodentsRevenge"
+        xmlns:local="clr-namespace:RodentsRevenge" 
+        WindowStyle="None" Height="448" Width="368"
         mc:Ignorable="d"
-          Title="MainWindow" Height="407" Width="384" Background="#FF828200" WindowStartupLocation="CenterScreen"  KeyUp="Window_KeyUp">
-    <Grid x:Name="main">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-            <RowDefinition Height="16"/>
-        </Grid.RowDefinitions>
-    </Grid>
+          Title="MainWindow"  Background="#FF828200" WindowStartupLocation="CenterScreen"  KeyUp="Window_KeyUp" ResizeMode="NoResize">
+    <StackPanel>
+        <Border Background="#FF0002AA" Height="20" VerticalAlignment="Top" MouseDown="Grid_MouseDown">
+            <Grid>
+                <Button Width="20" HorizontalAlignment="Left"  FontWeight="Bold" Foreground="White" Click="Button_Click">
+                    <Border BorderThickness="1" Width="10" Height="3" Background="White" BorderBrush="Black"/>
+                </Button>
+                <Label Margin="0, -3, 0, -2" Content="Rodent's Revenge" HorizontalAlignment="Center" Foreground="White" FontFamily="MS Reference Sans Serif" FontSize="11"/>
+            </Grid>
+
+        </Border>
+        <Border Height="20" Background="White"/>
+        <Border BorderBrush="Gray" BorderThickness="1" Height="40"  Background="#FFC3C3C3">
+            <Border BorderThickness="1" Height="38"  Background="#FFC3C3C3">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF292929"/>
+                        <GradientStop Color="#FF858585" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+            </Border>
+        </Border>
+        <Grid x:Name="main" Height="368" Width="368">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="16"/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </StackPanel>
+
 </Window>

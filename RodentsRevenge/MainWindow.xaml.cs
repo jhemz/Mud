@@ -36,7 +36,7 @@ namespace RodentsRevenge
             const int width = 23;
             const int height = 23;
 
-            mouse = new SpriteItem(0, 0, @"./Images/borderblock.png");
+            mouse = new SpriteItem(0, 0, @"./Images/mouse.png");
 
             Layer layer = new Layer();
             layer.Array = new int[width, height]
@@ -284,5 +284,18 @@ namespace RodentsRevenge
             return spriteItems;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var myWindow = Window.GetWindow(this);
+                myWindow.DragMove();
+            }
+        }
     }
 }
