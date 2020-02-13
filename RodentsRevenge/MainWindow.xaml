@@ -26,6 +26,15 @@
                         <GradientStop Color="#FF858585" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.BorderBrush>
+                <Grid>
+                    <StackPanel Orientation="Horizontal" Margin="20, 0, 0, 0">
+                        <Image Source="./Images/life.png" Width="25" Height="25" Margin="-2"/>
+                        <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2"/>
+                        <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2"/>
+                    </StackPanel>
+                   
+                    <Image Source="./Images/clock.png"/>
+                </Grid>
             </Border>
         </Border>
         <Grid x:Name="main" Height="368" Width="368">
