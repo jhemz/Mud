@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\j.marshall\\source\\repos\\CP\\RodentsRevengeiOS\\RodentsRevengeiOS.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\j.marshall\\source\\repos\\CP\\RodentsRevengeiOS\\RodentsRevengeiOS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\j.marshall\\source\\repos\\CP\\RodentsRevengeiOS\\RodentsRevengeiOS.csproj",
+        "projectName": "RodentsRevengeiOS",
+        "projectPath": "C:\\Users\\j.marshall\\source\\repos\\CP\\RodentsRevengeiOS\\RodentsRevengeiOS.csproj",
+        "packagesPath": "C:\\Users\\j.marshall\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\j.marshall\\source\\repos\\CP\\RodentsRevengeiOS\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\j.marshall\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "xamarinios10"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\DevExpress 19.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/igxkKVDSBi3XtNNrkGr8hMf1fc14CU5mbkwgkaZvrgd9cP64jy/api": {}
+        },
+        "frameworks": {
+          "xamarinios10": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "xamarinios10": {
+          "dependencies": {
+            "Xamarin.Essentials": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

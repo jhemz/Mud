@@ -20,7 +20,7 @@
         <Border Height="20" Background="White">
             <Menu>
                 <MenuItem Header="Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left">
-                    <MenuItem Header="New Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left" Name="NewGame" Click="NewGame_Click"/>
+                    <MenuItem Header="New Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left" Click="NewGame_Click"/>
                     <MenuItem Header="Pause" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
                     <MenuItem Header="High Scores" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
                     <MenuItem Header="Exit" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
@@ -44,10 +44,10 @@
                     </LinearGradientBrush>
                 </Border.BorderBrush>
                 <Grid>
-                    <StackPanel Orientation="Horizontal" Margin="20, 0, 0, 0">
-                        <Image Source="./Images/life.png" Width="25" Height="25" Margin="-2"/>
-                        <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2"/>
-                        <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2"/>
+                    <StackPanel Orientation="Horizontal" Margin="20, 0, 0, 0" Name="Lives">
+                        <Image Source="./Images/life.png" Width="25" Height="25" Margin="-2" x:Name="Life1"/>
+                        <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2" x:Name="Life2"/>
+                        <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2" x:Name="Life3"/>
                     </StackPanel>
 
                     <Image Source="./Images/clock.png" Width="35"/>
@@ -119,6 +119,7 @@
                 <RowDefinition Height="16"/>
                 <RowDefinition Height="16"/>
             </Grid.RowDefinitions>
+            <Label Name="lblGameOver" Visibility="Hidden" Content="Game Over" Grid.ColumnSpan="23" Grid.RowSpan="23" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontFamily="MS Reference Sans Serif" FontSize="11"/>
         </Grid>
     </StackPanel>
 

@@ -19,6 +19,7 @@
     <None Remove="Images\clock.png" />
     <None Remove="Images\life.png" />
     <None Remove="Images\mouse.png" />
+    <None Remove="Images\sleepingCat.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <Resource Include="Images\clock.png" />
     <Resource Include="Images\life.png" />
     <Resource Include="Images\mouse.png" />
+    <Resource Include="Images\sleepingCat.png" />
   </ItemGroup>
 
 </Project>

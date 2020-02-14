@@ -17,7 +17,8 @@ namespace MudEngine
         public event EventHandler<UpdateY_EventArgs> UpdateY_Event;
         public event EventHandler<AddNewSprite_EventArgs> AddNewSprite_Event;
         public event EventHandler<RemoveSprite_EventArgs> RemoveSprite_Event;
-
+        public event EventHandler LoseLife_Event;
+        public event EventHandler<ChangeSprite_EventArgs> ChangeSprite_Event; 
         public IsometricTileEngine(int width, int height)
         {
             GridWidth = width;
@@ -26,9 +27,27 @@ namespace MudEngine
             map.Layers.Add(new Layer());
 
 
-           
+
         }
 
+        public Tuple<int, int> GetRandomFreeLocation()
+        {
+            List<Tuple<int, int>> emptySpaces = new List<Tuple<int, int>>();
+
+            for (int y = 0; y < GridWidth; y++)
+            {
+                for (int x = 0; x < GridHeight; x++)
+                {
+                    if(Sprites.Where(a => a.X == x && a.Y == y).FirstOrDefault() == null)
+                    {
+                        emptySpaces.Add(new Tuple<int, int>(x, y));
+                    }
+                }
+            }
+            Random rnd = new Random();
+            int index = rnd.Next(emptySpaces.Count);
+            return emptySpaces[index];
+        }
 
         public void MoveCats()
         {
@@ -39,28 +58,77 @@ namespace MudEngine
                 switch (directionToMoveBaddie)
                 {
                     case Direction.left:
-                        UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, -1));
+                        if (!KilledMouse(baddie))
+                        {
+                            UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, -1));
+                        }
+                        else
+                        {
+                            LoseLife_Event?.Invoke(this, new EventArgs());
+                        }
                         break;
                     case Direction.right:
-                        UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, 1));
+                        if (!KilledMouse(baddie))
+                        {
+                            UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, 1));
+                        }
+                        else
+                        {
+                            LoseLife_Event?.Invoke(this, new EventArgs());
+                        }
                         break;
                     case Direction.up:
-                        UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, -1));
+                        if (!KilledMouse(baddie))
+                        {
+                            UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, -1));
+                        }
+                        else
+                        {
+                            LoseLife_Event?.Invoke(this, new EventArgs());
+                        }
                         break;
                     case Direction.down:
-                        UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, 1));
+                        if (!KilledMouse(baddie))
+                        {
+                            UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, 1));
+                        }
+                        else
+                        {
+                            LoseLife_Event?.Invoke(this, new EventArgs());
+                        }
                         break;
                     case Direction.none:
                         //cat died
-                        int _x = baddie.X;
-                        int _y = baddie.Y;
-                        RemoveSprite_Event?.Invoke(this, new RemoveSprite_EventArgs(baddie));
-                        AddNewSprite_Event?.Invoke(this, new AddNewSprite_EventArgs(new Sprite() { X = _x, Y = _y}));
+                        if(baddie.Lives > 0)
+                        {
+                            baddie.Lives--;
+                        }
+                        if(!Baddies.Where(a => a.Lives > 0).ToList().Any())
+                        {
+                            int _x = baddie.X;
+                            int _y = baddie.Y;
+                            RemoveSprite_Event?.Invoke(this, new RemoveSprite_EventArgs(baddie));
+                            AddNewSprite_Event?.Invoke(this, new AddNewSprite_EventArgs(new Sprite() { X = _x, Y = _y }));
+                        }
+                        else
+                        {
+                            ChangeSprite_Event?.Invoke(this, new ChangeSprite_EventArgs(baddie));
+                        }
+                        
                         break;
                 }
             }
         }
 
+        public bool KilledMouse(Sprite baddie)
+        {
+            bool result = false;
+            if (baddie.X == characterSprite.X && baddie.Y == characterSprite.Y)
+            {
+                result = true;
+            }
+            return result;
+        }
 
         public bool MoveSprites(Direction direction)
         {

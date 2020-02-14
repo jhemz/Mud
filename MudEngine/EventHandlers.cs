@@ -46,5 +46,15 @@ namespace MudEngine
         public Sprite Sprite { get; private set; }
     }
 
+    public class ChangeSprite_EventArgs : EventArgs
+    {
+        public ChangeSprite_EventArgs(Sprite sprite)
+        {
+            Sprite = sprite;
+        }
+
+        public Sprite Sprite { get; private set; }
+    }
+
 
 }

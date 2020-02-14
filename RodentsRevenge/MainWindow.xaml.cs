@@ -28,6 +28,8 @@ namespace RodentsRevenge
         List<SpriteItem> Blocks = new List<SpriteItem>();
         List<SpriteItem> Baddies = new List<SpriteItem>();
         DispatcherTimer dispatcherTimer;
+        bool gameOver;
+
 
         public MainWindow()
         {
@@ -40,7 +42,8 @@ namespace RodentsRevenge
         {
             const int width = 23;
             const int height = 23;
-
+            gameOver = false;
+            lblGameOver.Visibility = Visibility.Hidden;
             //SETUP MAP*****************
 
             //load levels
@@ -65,6 +68,8 @@ namespace RodentsRevenge
             engine.UpdateY_Event += UpdateY_EventHandler;
             engine.AddNewSprite_Event += AddNewSprite_EventHandler;
             engine.RemoveSprite_Event += RemoveSprite_EventHandler;
+            engine.LoseLife_Event += LoseLife_EventHandler;
+            engine.ChangeSprite_Event += ChangeSprite_EventHandler;
 
             for (int y = 0; y < width; y++)
             {
@@ -102,6 +107,29 @@ namespace RodentsRevenge
         }
 
         #region Event Handlers
+        private void ChangeSprite_EventHandler(object sender, ChangeSprite_EventArgs e)
+        {
+            SpriteItem spriteItem = GetSpriteItemFromSprite(e.Sprite);
+            spriteItem.image.Source = new BitmapImage(new Uri(@"./Images/sleepingCat.png", UriKind.Relative));
+        }
+
+        private void LoseLife_EventHandler(object sender, EventArgs e)
+        {
+            mouse.sprite.Lives--;
+
+            Tuple<int, int> newLocation = engine.GetRandomFreeLocation();
+            UpdateLocation(mouse, newLocation);
+            UpdateLivesUI();
+            if (mouse.sprite.Lives == 0)
+            {
+                //game over
+                lblGameOver.Visibility = Visibility.Visible;
+                dispatcherTimer.Stop();
+                main.Children.Remove(mouse);
+                gameOver = true;
+            }
+        }
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             engine.MoveCats();
@@ -133,6 +161,42 @@ namespace RodentsRevenge
         #endregion
 
         #region Update UI
+
+        private void UpdateLivesUI()
+        {
+            switch (mouse.sprite.Lives)
+            {
+                case 3:
+                    Life1.Visibility = Visibility.Visible;
+                    Life2.Visibility = Visibility.Visible;
+                    Life3.Visibility = Visibility.Visible;
+                    break;
+                case 2:
+                    Life1.Visibility = Visibility.Visible;
+                    Life2.Visibility = Visibility.Visible;
+                    Life3.Visibility = Visibility.Hidden;
+                    break;
+                case 1:
+                    Life1.Visibility = Visibility.Visible;
+                    Life2.Visibility = Visibility.Hidden;
+                    Life3.Visibility = Visibility.Hidden;
+                    break;
+                case 0:
+                    Life1.Visibility = Visibility.Hidden;
+                    Life2.Visibility = Visibility.Hidden;
+                    Life3.Visibility = Visibility.Hidden;
+                    break;
+
+            }
+        }
+
+        private void UpdateLocation(SpriteItem item, Tuple<int, int> location)
+        {
+            Grid.SetRow(item, location.Item2);
+            item.sprite.Y = location.Item2;
+            Grid.SetColumn(item, location.Item1);
+            item.sprite.X = location.Item1;
+        }
         private void UpdateY(SpriteItem item, int change)
         {
             Grid.SetRow(item, item.sprite.Y + change);
@@ -161,32 +225,35 @@ namespace RodentsRevenge
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
+            if (gameOver == false)
             {
-                if (engine.MoveSprites(Direction.left))
+                if (e.Key == Key.Left)
                 {
-                    UpdateX(mouse, -1);
+                    if (engine.MoveSprites(Direction.left))
+                    {
+                        UpdateX(mouse, -1);
+                    }
                 }
-            }
-            if (e.Key == Key.Right)
-            {
-                if (engine.MoveSprites(Direction.right))
+                if (e.Key == Key.Right)
                 {
-                    UpdateX(mouse, 1);
+                    if (engine.MoveSprites(Direction.right))
+                    {
+                        UpdateX(mouse, 1);
+                    }
                 }
-            }
-            if (e.Key == Key.Up)
-            {
-                if (engine.MoveSprites(Direction.up))
+                if (e.Key == Key.Up)
                 {
-                    UpdateY(mouse, -1);
+                    if (engine.MoveSprites(Direction.up))
+                    {
+                        UpdateY(mouse, -1);
+                    }
                 }
-            }
-            if (e.Key == Key.Down)
-            {
-                if (engine.MoveSprites(Direction.down))
+                if (e.Key == Key.Down)
                 {
-                    UpdateY(mouse, 1);
+                    if (engine.MoveSprites(Direction.down))
+                    {
+                        UpdateY(mouse, 1);
+                    }
                 }
             }
         }
@@ -225,8 +292,8 @@ namespace RodentsRevenge
 
         #endregion
 
-       
 
-       
+
+
     }
 }

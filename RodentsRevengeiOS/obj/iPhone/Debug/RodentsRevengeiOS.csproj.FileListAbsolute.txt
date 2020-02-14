@@ -1,0 +1,14 @@
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\ibtool\_BundleResourceWithLogicalName.items
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\actool\_PartialAppManifest.items
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\actool\_BundleResourceWithLogicalName.items
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\coremlc\_PartialAppManifest.items
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\coremlc\_BundleResourceWithLogicalName.items
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\optimized\
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\RodentsRevengeiOS.csprojAssemblyReference.cache
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\bin\iPhone\Debug\RodentsRevengeiOS.exe
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\bin\iPhone\Debug\RodentsRevengeiOS.pdb
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\bin\iPhone\Debug\Xamarin.Essentials.dll
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\bin\iPhone\Debug\Xamarin.Essentials.pdb
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\RodentsRevengeiOS.csproj.CopyComplete
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\RodentsRevengeiOS.exe
+C:\Users\j.marshall\source\repos\CP\RodentsRevengeiOS\obj\iPhone\Debug\RodentsRevengeiOS.pdb
