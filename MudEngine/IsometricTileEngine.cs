@@ -205,6 +205,7 @@ namespace MudEngine
 
     public enum Direction
     {
+        none,
         up,
         down,
         left,

@@ -17,7 +17,24 @@
             </Grid>
 
         </Border>
-        <Border Height="20" Background="White"/>
+        <Border Height="20" Background="White">
+            <Menu>
+                <MenuItem Header="Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left">
+                    <MenuItem Header="New Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+                    <MenuItem Header="Pause" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+                    <MenuItem Header="High Scores" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+                    <MenuItem Header="Exit" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Options" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left">
+                    <MenuItem Header="Difficulty" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+                </MenuItem>
+                <MenuItem Header="Help" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left">
+                    <MenuItem Header="About" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+
+                </MenuItem>
+            </Menu>
+           
+        </Border>
         <Border BorderBrush="Gray" BorderThickness="1" Height="40"  Background="#FFC3C3C3">
             <Border BorderThickness="1" Height="38"  Background="#FFC3C3C3">
                 <Border.BorderBrush>
@@ -32,8 +49,22 @@
                         <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2"/>
                         <Image Source="./Images/life.png" Width="25" Height="25"  Margin="-2"/>
                     </StackPanel>
-                   
-                    <Image Source="./Images/clock.png"/>
+
+                    <Image Source="./Images/clock.png" Width="35"/>
+                    <Grid Width="35" Height="35" Margin="0, 0, 0, -3" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="61.405"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border Background="#FF0000AA" Width="1" Height="10" Margin="0, 0, 0, 7" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid Width="35" Height="35" Margin="0, 0, 0, -3">
+                        <Border Background="Red" Width="1" Height="10" Margin="0, 0, 0, 7"/>
+                    </Grid>
                 </Grid>
             </Border>
         </Border>

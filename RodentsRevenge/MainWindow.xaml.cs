@@ -36,7 +36,7 @@ namespace RodentsRevenge
             const int width = 23;
             const int height = 23;
 
-            mouse = new SpriteItem(0, 0, @"./Images/mouse.png");
+            mouse = new SpriteItem(0, 0, @"./Images/mouse.png", 3);
 
             Layer layer = new Layer();
             layer.Array = new int[width, height]
@@ -102,9 +102,10 @@ namespace RodentsRevenge
                             SpriteItem cat = new SpriteItem(x, y, @"./Images/cat.png", true, true, mouse.sprite);
                             cat.sprite.Ai.engine = engine;
                             Grid.SetRow(cat, y);
+                            Blocks.Add(cat);
                             Grid.SetColumn(cat, x);
                             main.Children.Add(cat);
-                            Baddies.Add(cat);
+                            //Baddies.Add(cat);
                             break;
 
                     }
@@ -123,6 +124,7 @@ namespace RodentsRevenge
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
+            Baddies = Blocks.Where(x => x.sprite.Ai != null).ToList();
             foreach (SpriteItem baddie in Baddies)
             {
                 Direction directionToMoveBaddie = baddie.sprite.Ai.Move(baddie.sprite.X, baddie.sprite.Y);
@@ -147,6 +149,17 @@ namespace RodentsRevenge
                         y = baddie.sprite.Y + 1;
                         Grid.SetRow(baddie, y);
                         baddie.sprite.Y = y;
+                        break;
+                    case Direction.none:
+                        //cat died
+                        main.Children.Remove(baddie);
+                        int _x = baddie.sprite.X;
+                        int _y = baddie.sprite.Y;
+                        SpriteItem cheese = new SpriteItem(_x, _y, @"./Images/cheese.png", false, false);
+                        Grid.SetRow(cheese, _y);
+                        Blocks.Add(cheese);
+                        Grid.SetColumn(cheese, _x);
+                        main.Children.Add(cheese);
                         break;
                 }
             }
@@ -194,10 +207,17 @@ namespace RodentsRevenge
 
         private bool MoveSprites(Direction direction)
         {
+            bool timerStopped = false;
             bool canMove = false;
             if (engine.CollisionDetection(mouse.sprite.X, mouse.sprite.Y, direction))
             {
                 List<Sprite> Sprites = engine.GetAllSpritesInPath(mouse.sprite.X, mouse.sprite.Y, direction);
+
+                if(Sprites.Where(x => x.Ai != null).ToList().Any())
+                {
+                    timerStopped = true;
+                    dispatcherTimer.Stop();
+                }
 
                 switch (direction)
                 {
@@ -229,7 +249,8 @@ namespace RodentsRevenge
 
                 if (canMove)
                 {
-                    foreach (SpriteItem Block in GetSpriteItemsFromSprites(Sprites))
+                    List<SpriteItem> spriteItems = GetSpriteItemsFromSprites(Sprites);
+                    foreach (SpriteItem Block in spriteItems)
                     {
                         int _x = 0;
                         int _y = 0;
@@ -263,6 +284,10 @@ namespace RodentsRevenge
             {
                 canMove = true;
             }
+            if (timerStopped)
+            {
+                dispatcherTimer.Start();
+            }
             return canMove;
         }
 
@@ -271,7 +296,7 @@ namespace RodentsRevenge
             List<SpriteItem> spriteItems = new List<SpriteItem>();
 
             List<SpriteItem> source = Blocks;
-            source.AddRange(Baddies);
+            //source.AddRange(Baddies);
 
             foreach (SpriteItem Block in source)
             {

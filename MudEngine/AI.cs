@@ -86,8 +86,15 @@ namespace MudEngine
             Random rnd = new Random();
 
             int dir = rnd.Next(0, directions.Count);
-
-            return directions[dir];
+            if(directions.Count == 0)
+            {
+                return Direction.none;
+            }
+            else
+            {
+                return directions[dir];
+            }
+            
         }
     }
 }
