@@ -33,42 +33,38 @@ namespace RodentsRevenge
         {
             InitializeComponent();
 
+            NewGame(1);
+        }
+
+        private void NewGame(int level)
+        {
             const int width = 23;
             const int height = 23;
 
-            mouse = new SpriteItem(0, 0, @"./Images/mouse.png", 3);
+            //SETUP MAP*****************
 
+            //load levels
+            Levels levels = new Levels();
+            //create map layer
             Layer layer = new Layer();
-            layer.Array = new int[width, height]
-            {
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-            };
-            Level level = new Level(new IsometricTileEngine(width, height));
-            level.Map = new Map();
-            level.Map.Layers.Add(layer);
-            engine = level.Engine;
+            //assign data
+            layer.Array = levels.LevelMaps[level - 1];
+            //create level model and give it the game engine
+            Level _level = new Level(new IsometricTileEngine(width, height));
+            //create new game map
+            _level.Map = new Map();
+            //add the layer to the game map
+            _level.Map.Layers.Add(layer);
+            //store a copy of the game engine locally for local use
+            engine = _level.Engine;
+
+            mouse = new SpriteItem(0, 0, @"./Images/mouse.png", 3);
+            engine.characterSprite = mouse.sprite;
+
+            engine.UpdateX_Event += UpdateX_EventHandler;
+            engine.UpdateY_Event += UpdateY_EventHandler;
+            engine.AddNewSprite_Event += AddNewSprite_EventHandler;
+            engine.RemoveSprite_Event += RemoveSprite_EventHandler;
 
             for (int y = 0; y < width; y++)
             {
@@ -78,36 +74,21 @@ namespace RodentsRevenge
                     switch (value)
                     {
                         case 1:
-                            SpriteItem solidBlock = new SpriteItem(x, y, false);
-                            Blocks.Add(solidBlock);
-                            Grid.SetRow(solidBlock, y);
-                            Grid.SetColumn(solidBlock, x);
-                            main.Children.Add(solidBlock);
+                            AddNewSpriteItem(new SpriteItem(x, y, false));
                             break;
                         case 2:
-                            SpriteItem pushBlock = new SpriteItem(x, y, true);
-                            Blocks.Add(pushBlock);
-                            Grid.SetRow(pushBlock, y);
-                            Grid.SetColumn(pushBlock, x);
-                            main.Children.Add(pushBlock);
+                            AddNewSpriteItem(new SpriteItem(x, y, true));
                             break;
                         case 3:
                             mouse.sprite.X = x;
                             mouse.sprite.Y = y;
-                            Grid.SetRow(mouse, y);
-                            Grid.SetColumn(mouse, x);
-                            main.Children.Add(mouse);
+                            AddNewSpriteItem(mouse, false);
                             break;
                         case 4:
                             SpriteItem cat = new SpriteItem(x, y, @"./Images/cat.png", true, true, mouse.sprite);
                             cat.sprite.Ai.engine = engine;
-                            Grid.SetRow(cat, y);
-                            Blocks.Add(cat);
-                            Grid.SetColumn(cat, x);
-                            main.Children.Add(cat);
-                            //Baddies.Add(cat);
+                            AddNewSpriteItem(cat);
                             break;
-
                     }
                 }
             }
@@ -118,195 +99,101 @@ namespace RodentsRevenge
             dispatcherTimer.Start();
 
             engine.Sprites = Blocks.Select(x => x.sprite).ToList();
-            engine.Sprites.AddRange(Baddies.Select(x => x.sprite).ToList());
-
         }
 
+        #region Event Handlers
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Baddies = Blocks.Where(x => x.sprite.Ai != null).ToList();
-            foreach (SpriteItem baddie in Baddies)
-            {
-                Direction directionToMoveBaddie = baddie.sprite.Ai.Move(baddie.sprite.X, baddie.sprite.Y);
-                switch (directionToMoveBaddie)
-                {
-                    case Direction.left:
-                        int x = baddie.sprite.X - 1;
-                        Grid.SetColumn(baddie, x);
-                        baddie.sprite.X = x;
-                        break;
-                    case Direction.right:
-                        x = baddie.sprite.X + 1;
-                        Grid.SetColumn(baddie, x);
-                        baddie.sprite.X = x;
-                        break;
-                    case Direction.up:
-                        int y = baddie.sprite.Y - 1;
-                        Grid.SetRow(baddie, y);
-                        baddie.sprite.Y = y;
-                        break;
-                    case Direction.down:
-                        y = baddie.sprite.Y + 1;
-                        Grid.SetRow(baddie, y);
-                        baddie.sprite.Y = y;
-                        break;
-                    case Direction.none:
-                        //cat died
-                        main.Children.Remove(baddie);
-                        int _x = baddie.sprite.X;
-                        int _y = baddie.sprite.Y;
-                        SpriteItem cheese = new SpriteItem(_x, _y, @"./Images/cheese.png", false, false);
-                        Grid.SetRow(cheese, _y);
-                        Blocks.Add(cheese);
-                        Grid.SetColumn(cheese, _x);
-                        main.Children.Add(cheese);
-                        break;
-                }
-            }
+            engine.MoveCats();
         }
+
+        private void RemoveSprite_EventHandler(object sender, RemoveSprite_EventArgs e)
+        {
+            SpriteItem spriteItem = GetSpriteItemFromSprite(e.Sprite);
+            main.Children.Remove(spriteItem);
+        }
+
+        private void AddNewSprite_EventHandler(object sender, AddNewSprite_EventArgs e)
+        {
+            AddNewSpriteItem(new SpriteItem(e.Sprite.X, e.Sprite.Y, @"./Images/cheese.png", false, false));
+        }
+
+        private void UpdateY_EventHandler(object sender, UpdateY_EventArgs e)
+        {
+            SpriteItem spriteItem = GetSpriteItemFromSprite(e.Sprite);
+            UpdateY(spriteItem, e.Change);
+        }
+
+        private void UpdateX_EventHandler(object sender, UpdateX_EventArgs e)
+        {
+            SpriteItem spriteItem = GetSpriteItemFromSprite(e.Sprite);
+            UpdateX(spriteItem, e.Change);
+        }
+
+        #endregion
+
+        #region Update UI
+        private void UpdateY(SpriteItem item, int change)
+        {
+            Grid.SetRow(item, item.sprite.Y + change);
+            item.sprite.Y = item.sprite.Y + change;
+        }
+        private void UpdateX(SpriteItem item, int change)
+        {
+            Grid.SetColumn(item, item.sprite.X + change);
+            item.sprite.X = item.sprite.X + change;
+        }
+
+        private void AddNewSpriteItem(SpriteItem item, bool addToBlocks = true)
+        {
+            if (addToBlocks)
+            {
+                Blocks.Add(item);
+            }
+            Grid.SetRow(item, item.sprite.Y);
+            Grid.SetColumn(item, item.sprite.X);
+            main.Children.Add(item);
+        }
+
+        #endregion
+
+        #region User Event Handlers
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
             {
-                if (MoveSprites(Direction.left))
+                if (engine.MoveSprites(Direction.left))
                 {
-                    int x = mouse.sprite.X - 1;
-                    Grid.SetColumn(mouse, x);
-                    mouse.sprite.X = x;
+                    UpdateX(mouse, -1);
                 }
             }
             if (e.Key == Key.Right)
             {
-                if (MoveSprites(Direction.right))
+                if (engine.MoveSprites(Direction.right))
                 {
-                    int x = mouse.sprite.X + 1;
-                    Grid.SetColumn(mouse, x);
-                    mouse.sprite.X = x;
+                    UpdateX(mouse, 1);
                 }
             }
             if (e.Key == Key.Up)
             {
-                if (MoveSprites(Direction.up))
+                if (engine.MoveSprites(Direction.up))
                 {
-                    int y = mouse.sprite.Y - 1;
-                    Grid.SetRow(mouse, y);
-                    mouse.sprite.Y = y;
+                    UpdateY(mouse, -1);
                 }
             }
             if (e.Key == Key.Down)
             {
-                if (MoveSprites(Direction.down))
+                if (engine.MoveSprites(Direction.down))
                 {
-                    int y = mouse.sprite.Y + 1;
-                    Grid.SetRow(mouse, y);
-                    mouse.sprite.Y = y;
+                    UpdateY(mouse, 1);
                 }
             }
         }
 
-        private bool MoveSprites(Direction direction)
+        private void NewGame_Click(object sender, RoutedEventArgs e)
         {
-            bool timerStopped = false;
-            bool canMove = false;
-            if (engine.CollisionDetection(mouse.sprite.X, mouse.sprite.Y, direction))
-            {
-                List<Sprite> Sprites = engine.GetAllSpritesInPath(mouse.sprite.X, mouse.sprite.Y, direction);
-
-                if(Sprites.Where(x => x.Ai != null).ToList().Any())
-                {
-                    timerStopped = true;
-                    dispatcherTimer.Stop();
-                }
-
-                switch (direction)
-                {
-                    case Direction.down:
-                        if (engine.CanMoveSprites(Sprites, Direction.down))
-                        {
-                            canMove = true;
-                        }
-                        break;
-                    case Direction.up:
-                        if (engine.CanMoveSprites(Sprites, Direction.up))
-                        {
-                            canMove = true;
-                        }
-                        break;
-                    case Direction.left:
-                        if (engine.CanMoveSprites(Sprites, Direction.left))
-                        {
-                            canMove = true;
-                        }
-                        break;
-                    case Direction.right:
-                        if (engine.CanMoveSprites(Sprites, Direction.right))
-                        {
-                            canMove = true;
-                        }
-                        break;
-                }
-
-                if (canMove)
-                {
-                    List<SpriteItem> spriteItems = GetSpriteItemsFromSprites(Sprites);
-                    foreach (SpriteItem Block in spriteItems)
-                    {
-                        int _x = 0;
-                        int _y = 0;
-                        switch (direction)
-                        {
-                            case Direction.down:
-                                _y = Block.sprite.Y + 1;
-                                Grid.SetRow(Block, _y);
-                                Block.sprite.Y = _y;
-                                break;
-                            case Direction.up:
-                                _y = Block.sprite.Y - 1;
-                                Grid.SetRow(Block, _y);
-                                Block.sprite.Y = _y;
-                                break;
-                            case Direction.left:
-                                _x = Block.sprite.X - 1;
-                                Grid.SetColumn(Block, _x);
-                                Block.sprite.X = _x;
-                                break;
-                            case Direction.right:
-                                _x = Block.sprite.X + 1;
-                                Grid.SetColumn(Block, _x);
-                                Block.sprite.X = _x;
-                                break;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                canMove = true;
-            }
-            if (timerStopped)
-            {
-                dispatcherTimer.Start();
-            }
-            return canMove;
-        }
-
-        private List<SpriteItem> GetSpriteItemsFromSprites(List<Sprite> sprites)
-        {
-            List<SpriteItem> spriteItems = new List<SpriteItem>();
-
-            List<SpriteItem> source = Blocks;
-            //source.AddRange(Baddies);
-
-            foreach (SpriteItem Block in source)
-            {
-                Sprite sprite = sprites.Where(x => x.X == Block.sprite.X && Block.sprite.Y == x.Y).FirstOrDefault();
-                if (sprite != null)
-                {
-                    spriteItems.Add(Block);
-                }
-            }
-            return spriteItems;
+            NewGame(1);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -322,5 +209,24 @@ namespace RodentsRevenge
                 myWindow.DragMove();
             }
         }
+
+        #endregion
+
+        #region UI Helpers
+
+        private SpriteItem GetSpriteItemFromSprite(Sprite sprite)
+        {
+            List<SpriteItem> source = Blocks;
+
+            SpriteItem spriteItem = source.Where(x => sprite.X == x.sprite.X && x.sprite.Y == sprite.Y).FirstOrDefault();
+
+            return spriteItem;
+        }
+
+        #endregion
+
+       
+
+       
     }
 }

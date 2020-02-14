@@ -20,7 +20,7 @@
         <Border Height="20" Background="White">
             <Menu>
                 <MenuItem Header="Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left">
-                    <MenuItem Header="New Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
+                    <MenuItem Header="New Game" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left" Name="NewGame" Click="NewGame_Click"/>
                     <MenuItem Header="Pause" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
                     <MenuItem Header="High Scores" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>
                     <MenuItem Header="Exit" FontFamily="MS Reference Sans Serif"  HorizontalAlignment="Left"/>

@@ -13,16 +13,119 @@ namespace MudEngine
         public int GridHeight;
         public Map map;
 
+        public event EventHandler<UpdateX_EventArgs> UpdateX_Event;
+        public event EventHandler<UpdateY_EventArgs> UpdateY_Event;
+        public event EventHandler<AddNewSprite_EventArgs> AddNewSprite_Event;
+        public event EventHandler<RemoveSprite_EventArgs> RemoveSprite_Event;
+
         public IsometricTileEngine(int width, int height)
         {
             GridWidth = width;
             GridHeight = height;
             map = new Map();
             map.Layers.Add(new Layer());
+
+
+           
         }
 
 
-      
+        public void MoveCats()
+        {
+            List<Sprite> Baddies = Sprites.Where(x => x.Ai != null).ToList();
+            foreach (Sprite baddie in Baddies)
+            {
+                Direction directionToMoveBaddie = baddie.Ai.Move(baddie.X, baddie.Y);
+                switch (directionToMoveBaddie)
+                {
+                    case Direction.left:
+                        UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, -1));
+                        break;
+                    case Direction.right:
+                        UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, 1));
+                        break;
+                    case Direction.up:
+                        UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, -1));
+                        break;
+                    case Direction.down:
+                        UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, 1));
+                        break;
+                    case Direction.none:
+                        //cat died
+                        int _x = baddie.X;
+                        int _y = baddie.Y;
+                        RemoveSprite_Event?.Invoke(this, new RemoveSprite_EventArgs(baddie));
+                        AddNewSprite_Event?.Invoke(this, new AddNewSprite_EventArgs(new Sprite() { X = _x, Y = _y}));
+                        break;
+                }
+            }
+        }
+
+
+        public bool MoveSprites(Direction direction)
+        {
+            bool canMove = false;
+            if (CollisionDetection(characterSprite.X, characterSprite.Y, direction))
+            {
+                List<Sprite> Sprites = GetAllSpritesInPath(characterSprite.X, characterSprite.Y, direction);
+
+                switch (direction)
+                {
+                    case Direction.down:
+                        if (CanMoveSprites(Sprites, Direction.down))
+                        {
+                            canMove = true;
+                        }
+                        break;
+                    case Direction.up:
+                        if (CanMoveSprites(Sprites, Direction.up))
+                        {
+                            canMove = true;
+                        }
+                        break;
+                    case Direction.left:
+                        if (CanMoveSprites(Sprites, Direction.left))
+                        {
+                            canMove = true;
+                        }
+                        break;
+                    case Direction.right:
+                        if (CanMoveSprites(Sprites, Direction.right))
+                        {
+                            canMove = true;
+                        }
+                        break;
+                }
+
+                if (canMove)
+                {
+                    foreach (Sprite sprite in Sprites)
+                    {
+                        switch (direction)
+                        {
+                            case Direction.down:
+                                UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(sprite, 1));
+                                break;
+                            case Direction.up:
+                                UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(sprite, -1));
+                                break;
+                            case Direction.left:
+                                UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(sprite, -1));
+                                break;
+                            case Direction.right:
+                                UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(sprite, 1));
+                                break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                canMove = true;
+            }
+            return canMove;
+        }
+
 
         public bool CollisionDetection(int x, int y, Direction direction)
         {
