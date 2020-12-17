@@ -26,7 +26,6 @@ namespace RodentsRevenge
 
         SpriteItem mouse;
         List<SpriteItem> Blocks = new List<SpriteItem>();
-        List<SpriteItem> Baddies = new List<SpriteItem>();
         DispatcherTimer dispatcherTimer;
         bool gameOver;
 
@@ -35,11 +34,17 @@ namespace RodentsRevenge
         {
             InitializeComponent();
 
-            NewGame(1);
+            NewGame(2);
         }
 
         private void NewGame(int level)
         {
+            dispatcherTimer = null;
+
+            main.Children.Clear();
+
+            Blocks = new List<SpriteItem>();
+
             const int width = 23;
             const int height = 23;
             gameOver = false;

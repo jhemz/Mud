@@ -18,16 +18,14 @@ namespace MudEngine
         public event EventHandler<AddNewSprite_EventArgs> AddNewSprite_Event;
         public event EventHandler<RemoveSprite_EventArgs> RemoveSprite_Event;
         public event EventHandler LoseLife_Event;
-        public event EventHandler<ChangeSprite_EventArgs> ChangeSprite_Event; 
+        public event EventHandler<ChangeSprite_EventArgs> ChangeSprite_Event;
+
         public IsometricTileEngine(int width, int height)
         {
             GridWidth = width;
             GridHeight = height;
             map = new Map();
             map.Layers.Add(new Layer());
-
-
-
         }
 
         public Tuple<int, int> GetRandomFreeLocation()
@@ -38,7 +36,7 @@ namespace MudEngine
             {
                 for (int x = 0; x < GridHeight; x++)
                 {
-                    if(Sprites.Where(a => a.X == x && a.Y == y).FirstOrDefault() == null)
+                    if (Sprites.Where(a => a.X == x && a.Y == y).FirstOrDefault() == null)
                     {
                         emptySpaces.Add(new Tuple<int, int>(x, y));
                     }
@@ -58,52 +56,40 @@ namespace MudEngine
                 switch (directionToMoveBaddie)
                 {
                     case Direction.left:
-                        if (!KilledMouse(baddie))
-                        {
-                            UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, -1));
-                        }
-                        else
+                        UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, -1));
+                        if (KilledMouse(baddie))
                         {
                             LoseLife_Event?.Invoke(this, new EventArgs());
                         }
                         break;
                     case Direction.right:
-                        if (!KilledMouse(baddie))
-                        {
-                            UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, 1));
-                        }
-                        else
+                        UpdateX_Event?.Invoke(this, new UpdateX_EventArgs(baddie, 1));
+                        if (KilledMouse(baddie))
                         {
                             LoseLife_Event?.Invoke(this, new EventArgs());
                         }
                         break;
                     case Direction.up:
-                        if (!KilledMouse(baddie))
-                        {
-                            UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, -1));
-                        }
-                        else
+                        UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, -1));
+                        if (KilledMouse(baddie))
                         {
                             LoseLife_Event?.Invoke(this, new EventArgs());
                         }
                         break;
                     case Direction.down:
-                        if (!KilledMouse(baddie))
-                        {
-                            UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, 1));
-                        }
-                        else
+                        UpdateY_Event?.Invoke(this, new UpdateY_EventArgs(baddie, 1));
+                        if (KilledMouse(baddie))
                         {
                             LoseLife_Event?.Invoke(this, new EventArgs());
                         }
                         break;
                     case Direction.none:
                         //cat died
-                        if(baddie.Lives > 0)
+                        if (baddie.Lives > 0)
                         {
                             baddie.Lives--;
                         }
-                        if(!Baddies.Where(a => a.Lives > 0).ToList().Any())
+                        if (!Baddies.Where(a => a.Lives > 0).ToList().Any())
                         {
                             int _x = baddie.X;
                             int _y = baddie.Y;
@@ -114,7 +100,7 @@ namespace MudEngine
                         {
                             ChangeSprite_Event?.Invoke(this, new ChangeSprite_EventArgs(baddie));
                         }
-                        
+
                         break;
                 }
             }
@@ -193,7 +179,6 @@ namespace MudEngine
             }
             return canMove;
         }
-
 
         public bool CollisionDetection(int x, int y, Direction direction)
         {
